@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Emu's Cake Bakery - Handcrafted custom cakes baked with love in Maijdee, Noakhali. Order fresh birthday, wedding and custom cakes delivered to your door." />
+    <meta name="keywords"
+        content="cake bakery Noakhali, custom cakes Maijdee, birthday cake Noakhali, wedding cake Bangladesh, Emu bakery" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Emu's Cake Bakery - Maijdee, Noakhali" />
+    <meta property="og:description" content="Homemade cakes baked with love. Get fresh birthday, wedding and custom cakes delivered across Noakhali." />
+    <meta property="og:image" content="images/IMG_1981.png" />
+
+    <title>Emu's Cake Bakery - Maijdee, Noakhali | Custom Cakes and Delivery</title>
+    
+    <link rel="icon" href="https://fav.farm/🎂" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ── Loading Screen ── -->
+    <div id="loader">
+        <div class="loader-cake">🎂</div>
+        <div class="loader-text">Emu's Cake Bakery</div>
+        <div class="loader-sub">Maijdee, Noakhali · Est. 2019</div>
+        <div class="loader-bar">
+            <div class="loader-bar-inner"></div>
+        </div>
+    </div>
+
+    <!-- ── Overlay ── -->
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+    <!-- ── Cart Sidebar ── -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>🛒 Your Cart</h2>
+            <button class="cart-close" onclick="closeCart()" title="Close cart">✕</button>
+        </div>
+        <div class="cart-body" id="cart-body"></div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span class="cart-subtotal-val" id="cart-subtotal">৳ 0</span>
+            </div>
+            <p class="cart-note">💡 Final price confirmed on WhatsApp after bakery review. Prices shown are per kg.</p>
+            <button class="cart-order-btn" onclick="orderFromCart()">💬 Order on WhatsApp</button>
+            <button class="cart-clear-btn" onclick="clearCart()">🗑 Clear Cart</button>
+        </div>
+    </div>
+
+    <!-- ── Toast Container ── -->
+    <div id="toast-container"></div>
+
+    <!-- ── Lightbox ── -->
+    <div id="lightbox">
+        <button class="lb-close" onclick="closeLightbox()">✕</button>
+        <div id="lb-content"></div>
+        <div class="lb-caption" id="lb-caption"></div>
+    </div>
+
+    <!-- ── Navbar ── -->
+    <nav id="navbar">
+        <a class="nav-logo" onclick="showPage('home')">
+            <span class="cake-icon">🎂</span>
+            Emu's Cake Bakery
+        </a>
+        <div class="nav-links">
+            <a id="nav-home" class="active" onclick="showPage('home')">Home</a>
+            <a id="nav-menu" onclick="showPage('menu')">Menu</a>
+            <a id="nav-gallery" onclick="showPage('gallery')">Gallery</a>
+            <a id="nav-review"
+                onclick="showPage('home'); setTimeout(() => document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'}), 100)"
+                data-i18n="nav-review">Reviews</a>
+            <a id="nav-contact" onclick="showPage('contact')">Contact</a>
+            <a id="nav-order" class="nav-order-btn" onclick="showPage('order')">Order Now</a>
+        </div>
+        <div class="nav-right">
+            <button id="lang-btn" onclick="toggleLanguage()" class="lang-toggle-btn"
+                title="Switch Language">বাংলা</button>
+            <button class="nav-cart-btn" id="nav-cart-btn" onclick="openCart()" title="View cart">
+                🛒
+                <span class="nav-cart-badge" id="nav-cart-badge">0</span>
+            </button>
+            <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <a onclick="showPage('home'); closeMobile()" data-i18n="mob-home">🏠 Home</a>
+        <a onclick="showPage('menu'); closeMobile()" data-i18n="mob-menu">🎂 Menu</a>
+        <a onclick="showPage('gallery'); closeMobile()" data-i18n="mob-gallery">🖼 Gallery</a>
+        <a onclick="showPage('home'); closeMobile(); setTimeout(() => document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'}), 100)"
+            data-i18n="mob-review">⭐ Reviews</a>
+        <a onclick="showPage('order'); closeMobile()" data-i18n="mob-order">📋 Order Now</a>
+        <a onclick="showPage('contact'); closeMobile()" data-i18n="mob-contact">📞 Contact</a>
+        <a onclick="openCart(); closeMobile()" data-i18n="mob-cart">🛒 View Cart</a>
+    </div>
+
+    <!-- ══════════════════════ PAGE: HOME ══════════════════════ -->
+    <div id="page-home" class="page active">
+
+        <!-- Facebook Banner -->
+        <a class="fb-menu-banner" href="https://www.facebook.com/emuscakebakery" target="_blank">
+            <div class="fb-menu-banner-inner">
+                <div class="fb-menu-banner-left">
+                    <div class="fb-menu-banner-icon">📘</div>
+                    <div class="fb-menu-banner-text">
+                        <strong data-i18n="fb-title">Follow us on Facebook for daily updates &amp; latest
+                            prices!</strong>
+                        <span data-i18n="fb-sub">New cake designs, seasonal specials &amp; price updates — place your
+                            order directly on our page 🎂</span>
+                    </div>
+                </div>
+                <div class="fb-menu-banner-btn" data-i18n="fb-btn">Visit Facebook Page →</div>
+            </div>
+        </a>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-eyebrow reveal" data-i18n="hero-eyebrow">🍰 Homemade · Maijdee, Noakhali</div>
+                    <h1 class="reveal reveal-delay-1" data-i18n-html="hero-h1">
+                        Homemade Cakes<br>Baked with<em><br>Pure Love</em><br>in Noakhali
+                    </h1>
+                    <p class="hero-sub reveal reveal-delay-2" data-i18n="hero-sub">
+                        Every cake is lovingly baked at home using the finest ingredients — no factory, no shortcuts.
+                        Just real homemade goodness delivered fresh to your door across Noakhali.
+                    </p>
+                    <div class="hero-actions reveal reveal-delay-3">
+                        <button class="btn-primary" onclick="showPage('menu')" data-i18n="btn-explore">🎂 Explore
+                            Menu</button>
+                        <button class="btn-wa" onclick="openWhatsApp()" data-i18n="btn-wa-hero">💬 WhatsApp
+                            Order</button>
+                    </div>
+                    <div class="hero-stats reveal reveal-delay-4">
+                        <div class="hero-stat">
+                            <div class="num" data-counter="500" data-suffix="+">0</div>
+                            <div class="lbl" data-i18n="stat-cust">Happy Customers</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="num">5.0★</div>
+                            <div class="lbl" data-i18n="stat-rating">Avg. Rating</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="num" data-counter="50" data-suffix="+">0</div>
+                            <div class="lbl" data-i18n="stat-designs">Cake Designs</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="num">5 yrs</div>
+                            <div class="lbl" data-i18n="stat-years">Of Baking</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual reveal reveal-delay-2">
+                    <div class="hero-img-wrap">
+                        <img src="images/IMG_1981.png" alt="Beautiful handcrafted cake by Emu's Bakery"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hero-img-fallback" style="display:none;">🎂</div>
+                        <div class="hero-badge">
+                            <div class="badge-icon">⭐</div>
+                            <div class="badge-text">
+                                <strong data-i18n="badge-title">Fresh Homemade</strong>
+                                <span data-i18n="badge-sub">Made to order daily</span>
+                            </div>
+                        </div>
+                        <div class="hero-rating-badge">
+                            <div class="r-num">5.0</div>
+                            <div class="r-stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="section features-bg">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow reveal" data-i18n="feat-eyebrow">Why Choose Us</div>
+                    <h2 class="section-title reveal reveal-delay-1" data-i18n="feat-title">Noakhali's Most Loved Bakery
+                    </h2>
+                    <p class="section-sub reveal reveal-delay-2" data-i18n="feat-sub">Quality you can taste,service you
+                        can trust</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">🌿</div>
+                        <h3 data-i18n="feat1-t">Fresh Ingredients</h3>
+                        <p data-i18n="feat1-d">We source only the finest local and imported ingredients, baked fresh
+                            every day to order.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-1">
+                        <div class="feature-icon">✨</div>
+                        <h3 data-i18n="feat2-t">Custom Designs</h3>
+                        <p data-i18n="feat2-d">Your vision, our craft. We bring any cake design to life for any occasion
+                            — big or small.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-2">
+                        <div class="feature-icon">🚚</div>
+                        <h3 data-i18n="feat3-t">Noakhali Delivery</h3>
+                        <p data-i18n="feat3-d">Fast, safe home delivery across Maijdee, Chowmuhani, Begumganj, Sonaimuri
+                            and nearby areas.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-3">
+                        <div class="feature-icon">❤️</div>
+                        <h3 data-i18n="feat4-t">Made with Love</h3>
+                        <p data-i18n="feat4-d">Every homemade cake is crafted in our home kitchen with genuine passion
+                            and meticulous care.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Cakes -->
+        <section class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow reveal" data-i18n="pop-eyebrow">Best Sellers</div>
+                    <h2 class="section-title reveal reveal-delay-1" data-i18n="pop-title">Our Most Popular Cakes</h2>
+                    <p class="section-sub reveal reveal-delay-2" data-i18n="pop-sub">Add to cart and order directly via
+                        WhatsApp</p>
+                </div>
+                <div class="cakes-grid" id="home-cakes-grid"></div>
+                <div style="text-align:center; margin-top:32px;">
+                    <button class="btn-outline reveal" onclick="showPage('menu')" data-i18n="pop-btn">View Full Menu
+                        →</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Testimonials -->
+        <section class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow reveal" data-i18n="testi-eyebrow">Customer Love</div>
+                    <h2 class="section-title reveal reveal-delay-1" data-i18n="testi-title">What Noakhali Says About Us
+                    </h2>
+                </div>
+                <div class="testi-grid">
+                    <div class="testimonial reveal">
+                        <div class="stars">★★★★★</div>
+                        <p class="t-text" data-i18n="t1-text">Birthday cake for my son was absolutely gorgeous! Everyone
+                            kept asking where we got it. Best bakery in Maijdee without a doubt!</p>
+                        <div class="t-author">
+                            <div class="t-avatar">F</div>
+                            <div>
+                                <div class="t-name" data-i18n="t1-name">Fatima Begum</div>
+                                <div class="t-loc" data-i18n="t1-loc">Maijdee Court, Noakhali</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial reveal reveal-delay-1">
+                        <div class="stars">★★★★★</div>
+                        <p class="t-text" data-i18n="t2-text">Ordered a custom wedding cake and it exceeded all our
+                            expectations. Taste was divine and delivery was right on time. Highly recommended!</p>
+                        <div class="t-author">
+                            <div class="t-avatar">R</div>
+                            <div>
+                                <div class="t-name" data-i18n="t2-name">Rakib Hossain</div>
+                                <div class="t-loc" data-i18n="t2-loc">Chowmuhani, Noakhali</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial reveal reveal-delay-2">
+                        <div class="stars">★★★★★</div>
+                        <p class="t-text" data-i18n="t3-text">Best chocolate cake in all of Noakhali! Delivery was super
+                            fast and incredibly fresh. Will always order from Emu's Cake Bakery!</p>
+                        <div class="t-author">
+                            <div class="t-avatar">N</div>
+                            <div>
+                                <div class="t-name" data-i18n="t3-name">Nadia Sultana</div>
+                                <div class="t-loc" data-i18n="t3-loc">Begumganj, Noakhali</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshot Reviews -->
+        <section class="section" style="padding-top:0" id="reviews-section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow reveal" data-i18n="ss-eyebrow">Real Feedback</div>
+                    <h2 class="section-title reveal reveal-delay-1" data-i18n="ss-title">Customer Reviews</h2>
+                    <p class="section-sub reveal reveal-delay-2" data-i18n="ss-sub">Screenshots from our happy customers
+                        on Facebook & WhatsApp</p>
+                </div>
+                <div class="screenshot-reviews-grid">
+                    <!-- Placeholders for the user to attach actual review screenshots -->
+                    <div class="ss-review-card reveal">
+                        <img src="images/IMG_8255.PNG" alt="Customer Review Screenshot 1" loading="lazy">
+                    </div>
+                    <div class="ss-review-card reveal reveal-delay-1">
+                        <img src="images/IMG_1993.png" alt="Customer Review Screenshot 2" loading="lazy">
+                    </div>
+                    <div class="ss-review-card reveal reveal-delay-2">
+                        <img src="images/IMG_1981.png" alt="Customer Review Screenshot 3" loading="lazy">
+                    </div>
+                    <!-- The user can copy paste these block to add more -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="section" style="padding-top:0">
+            <div class="section-inner">
+                <div class="cta-banner reveal">
+                    <h2 data-i18n="cta-title">Ready to Order Your Dream Cake?</h2>
+                    <p data-i18n="cta-sub">Place your order today and get a fresh cake delivered anywhere in Noakhali!
+                    </p>
+                    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn-outline" style="border-color:#fff;color:#fff;" onclick="showPage('order')"
+                            data-i18n="cta-btn1">📋 Place an Order</button>
+                        <button class="btn-wa" onclick="openWhatsApp()" style="background:#fff;color:#128C7E;"
+                            data-i18n="cta-btn2">💬 WhatsApp Us</button>
+                        <button class="btn-fb-solid"
+                            onclick="window.open('https://www.facebook.com/emuscakebakery', '_blank')"
+                            style="background:#fff;color:#1877F2;" data-i18n="cta-btn3">📘 Message on Facebook</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    </section>
+
+    </div><!-- /page-home -->
+
+    <!-- ══════════════════════ PAGE: MENU ══════════════════════ -->
+    <div id="page-menu" class="page">
+
+        <section class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow">Our Offerings</div>
+                    <h2 class="section-title">Fresh Baked Cakes Menu</h2>
+                    <p class="section-sub">Message us on Facebook or WhatsApp for the updated price · Prices in BDT (per
+                        kg)</p>
+                </div>
+                <div class="menu-controls">
+                    <div class="search-wrap">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="cake-search" class="search-input" placeholder="Search cakes..."
+                            oninput="searchCakes()" />
+                    </div>
+                    <div class="filter-bar">
+                        <button class="filter-btn active" id="filter-all" onclick="filterCakes('all', this)">All
+                            Cakes</button>
+                        <button class="filter-btn" id="filter-birthday" onclick="filterCakes('birthday', this)">🎂
+                            Birthday</button>
+                        <button class="filter-btn" id="filter-wedding" onclick="filterCakes('wedding', this)">💍
+                            Wedding</button>
+                        <button class="filter-btn" id="filter-custom" onclick="filterCakes('custom', this)">🎨
+                            Custom</button>
+                    </div>
+                </div>
+                <div class="cakes-grid" id="cakes-grid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ══════════════════════ PAGE: ORDER ══════════════════════ -->
+    <div id="page-order" class="page">
+        <section class="section order-bg">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow">Place an Order</div>
+                    <h2 class="section-title">Order Your Cake Today</h2>
+                    <p class="section-sub">Fill in the form below — we'll confirm within 2 hours via WhatsApp 💬</p>
+                </div>
+                <div class="order-layout">
+
+                    <!-- Form -->
+                    <div class="order-wrapper">
+                        <div class="form-section-title">📋 Order Details</div>
+                        <div class="form-section-sub">Fields marked with * are required</div>
+                        <div class="form-divider"></div>
+                        <div class="form-grid">
+                            <div class="form-group" id="fg-name">
+                                <label>Full Name *</label>
+                                <input type="text" id="o-name" placeholder="e.g. Karim Uddin" />
+                                <span class="form-error-msg">Please enter your full name</span>
+                            </div>
+                            <div class="form-group" id="fg-phone">
+                                <label>WhatsApp Number *</label>
+                                <input type="tel" id="o-phone" placeholder="e.g. 01576742531" />
+                                <span class="form-error-msg">Please enter your phone number</span>
+                            </div>
+                            <div class="form-group full" id="fg-address">
+                                <label>Delivery Address *</label>
+                                <input type="text" id="o-address" placeholder="House no., Road, Area — Noakhali" />
+                                <span class="form-error-msg">Please enter your delivery address</span>
+                            </div>
+                            <div class="form-group" id="fg-type">
+                                <label>Cake Type *</label>
+                                <select id="o-type">
+                                    <option value="">Select a cake...</option>
+                                    <option>Chocolate Truffle Cake</option>
+                                    <option>Vanilla Dream Cake</option>
+                                    <option>Strawberry Delight</option>
+                                    <option>Red Velvet Cake</option>
+                                    <option>Mango Cream Cake</option>
+                                    <option>Black Forest Cake</option>
+                                    <option>Wedding Cake (Tiered)</option>
+                                    <option>Floral Fondant Cake</option>
+                                    <option>Custom Design Cake</option>
+                                </select>
+                                <span class="form-error-msg">Please select a cake type</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Cake Size</label>
+                                <select id="o-size">
+                                    <option>1 kg</option>
+                                    <option>1.5 kg</option>
+                                    <option>2 kg</option>
+                                    <option>2.5 kg</option>
+                                    <option>3 kg</option>
+                                    <option>Custom Size</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="fg-date">
+                                <label>Delivery Date *</label>
+                                <input type="date" id="o-date" />
+                                <span class="form-error-msg">Please select a delivery date</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred Time</label>
+                                <select id="o-time">
+                                    <option>10:00 AM – 12:00 PM</option>
+                                    <option>12:00 PM – 3:00 PM</option>
+                                    <option>3:00 PM – 6:00 PM</option>
+                                    <option>6:00 PM – 9:00 PM</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label>Cake Message / Design Notes</label>
+                                <textarea id="o-notes"
+                                    placeholder="e.g. 'Happy Birthday Riya', design theme, dietary requirements, area in Noakhali..."></textarea>
+                            </div>
+                            <div class="form-group full">
+                                <button class="submit-btn" id="submit-btn" onclick="submitOrder()">
+                                    💬 Confirm Order via WhatsApp
+                                </button>
+                                <div class="success-msg" id="success-msg">
+                                    🎉 Thank you! Redirecting to WhatsApp to confirm your order...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div class="order-cart-summary" id="order-cart-summary">
+                        <h3>🛒 Cart Summary</h3>
+                        <div id="ocs-items"></div>
+                        <div class="ocs-total" id="ocs-total" style="display:none;">
+                            <span>Total</span>
+                            <span class="ocs-total-val" id="ocs-total-val">৳ 0</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ══════════════════════ PAGE: GALLERY ══════════════════════ -->
+    <div id="page-gallery" class="page">
+        <section class="section gallery-bg">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow">Our Creations</div>
+                    <h2 class="section-title">A Taste of Our Work</h2>
+                    <p class="section-sub">Handcrafted with love right here in Maijdee, Noakhali 🍰</p>
+                </div>
+                <div class="gallery-grid">
+                    <!-- Big feature item -->
+                    <div class="gallery-item big"
+                        onclick="openLightbox('images/IMG_1981.png', null, 'Happy Birthday Princess — Sofia Tiered Cake')">
+                        <img src="images/IMG_1981.png" alt="Sofia Princess Birthday Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_1993.png', null, 'Cinderella Tiered Cake — For Ayat')">
+                        <img src="images/IMG_1993.png" alt="Cinderella Birthday Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_2450.png', null, 'Happy Birthday Lombu — Custom Character Cake')">
+                        <img src="images/IMG_2450.png" alt="Custom Birthday Character Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_2671.png', null, 'Floral Bouquet Cake — Happy Birthday Mama\'s Girl')">
+                        <img src="images/IMG_2671.png" alt="Floral Bouquet Birthday Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_2672.png', null, 'Happy Birthday Paiman — Panda Cake')">
+                        <img src="images/IMG_2672.png" alt="Panda Birthday Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_7870.PNG', null, 'Chocolate Truffle Cake')">
+                        <img src="images/IMG_7870.PNG" alt="Chocolate Truffle Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox('images/IMG_8255.PNG', null, 'Elegant Tiered Wedding Cake')">
+                        <img src="images/IMG_8255.PNG" alt="Wedding Cake">
+                        <div class="gallery-overlay"><span>🔍</span></div>
+                    </div>
+                </div>
+                <div class="gallery-social">
+                    <p>Follow us on social media for daily sweet creations from Maijdee, Noakhali!</p>
+                    <div class="social-btns">
+                        <a class="gallery-social-btn btn-fb" href="https://www.facebook.com/emuscakebakery"
+                            target="_blank">📘 Facebook</a>
+                        <a class="gallery-social-btn btn-ig" href="https://instagram.com" target="_blank">📸
+                            Instagram</a>
+                        <button class="gallery-social-btn btn-wa-gallery" onclick="openWhatsApp()">💬 WhatsApp
+                            Order</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ══════════════════════ PAGE: CONTACT ══════════════════════ -->
+    <div id="page-contact" class="page">
+        <section class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eyebrow">Get in Touch</div>
+                    <h2 class="section-title">We're Based in Maijdee,Noakhali</h2>
+                    <p class="section-sub">Open 7 days a week</p>
+                </div>
+                <div class="contact-grid">
+                    <a class="contact-card"
+                        href="https://wa.me/8801576742531?text=Hello!%20I'd%20like%20to%20order%20a%20cake!"
+                        target="_blank">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <div class="contact-label">Phone / WhatsApp</div>
+                            <div class="contact-val">+880 1576-742531</div>
+                            <div class="contact-note">Tap to open WhatsApp · 24/7</div>
+                        </div>
+                    </a>
+                    <a class="contact-card" href="mailto:emus.cakes@gmail.com">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <div class="contact-val">emus.cakes@gmail.com</div>
+                            <div class="contact-note">We reply few moment</div>
+                        </div>
+                    </a>
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <div class="contact-label">Location</div>
+                            <div class="contact-val">Maijdee,Noakhali</div>
+                            <div class="contact-note">Noakhali — 3800,Bangladesh</div>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🕐</div>
+                        <div>
+                            <div class="contact-label">Business Hours</div>
+                            <div class="contact-val">24/7</div>
+                            <div class="contact-note">Every day,all year round</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="delivery-areas reveal">
+                    <h3>🚚 Delivery Areas in Noakhali</h3>
+                    <div class="area-chips">
+                        <span class="area-chip">Maijdee</span>
+                        <span class="area-chip">Chowmuhani</span>
+                        <span class="area-chip">Begumganj</span>
+                        <span class="area-chip">Sonaimuri</span>
+                        <span class="area-chip">Companiganj</span>
+                        <span class="area-chip">Senbagh</span>
+                    </div>
+                </div>
+
+                <div class="whatsapp-box reveal">
+                    <h3 data-i18n="wa-box-title">Order Directly on WhatsApp</h3>
+                    <p data-i18n-html="wa-box-sub">The fastest way to place your order!<br>We respond within minutes from
+                        Maijdee.</p>
+                    <a class="whatsapp-btn"
+                        href="https://wa.me/8801576742531?text=Hello!%20I%20would%20like%20to%20order%20a%20cake%20from%20Emu's%20Cake%20Bakery%2C%20Maijdee%2C%20Noakhali."
+                        target="_blank" data-i18n="wa-box-btn">
+                        💬 Chat on WhatsApp
+                    </a>
+                </div>
+
+                <div class="facebook-box reveal">
+                    <h3 data-i18n="fb-box-title">Contact on Facebook</h3>
+                    <p data-i18n-html="fb-box-sub">Contact on Facebook for fast order! We reply instantly.</p>
+                    <a class="facebook-btn" href="https://www.facebook.com/emuscakebakery" target="_blank"
+                        data-i18n="fb-box-btn">
+                        📘 Message on Facebook
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand-name">🎂 Emu's Cake Bakery</div>
+                    <p class="footer-about" data-i18n="foot-about">Homemade cakes baked with love in Maijdee, Noakhali,
+                        Bangladesh. Making
+                        every celebration sweeter since 2019.</p>
+                    <a class="footer-contact-item" href="https://wa.me/8801576742531" target="_blank">📱 +880
+                        1576-742531</a>
+                    <a class="footer-contact-item" href="mailto:emus.cakes@gmail.com">📧 emus.cakes@gmail.com</a>
+                    <div class="footer-social">
+                        <button class="social-btn"
+                            onclick="window.open('https://www.facebook.com/emuscakebakery','_blank')">📘
+                            Facebook</button>
+                        <button class="social-btn" onclick="window.open('https://instagram.com','_blank')">📸
+                            Instagram</button>
+                        <button class="social-btn" onclick="openWhatsApp()">💬 WhatsApp</button>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <div class="nav-links">
+                        <a onclick="showPage('home')" class="active" id="nav-home" data-i18n="nav-home">Home</a>
+                        <a onclick="showPage('menu')" id="nav-menu" data-i18n="nav-menu">Menu</a>
+                        <a onclick="showPage('gallery')" id="nav-gallery" data-i18n="nav-gallery">Gallery</a>
+                        <a onclick="showPage('order')" class="nav-order-btn" id="nav-order" data-i18n="nav-order">Order
+                            Now</a>
+                        <a onclick="showPage('contact')" id="nav-contact" data-i18n="nav-contact">Contact</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Cake Types</h4>
+                        <a
+                            onclick="showPage('menu'); filterCakes('birthday', document.getElementById('filter-birthday'))">Birthday
+                            Cakes</a>
+                        <a
+                            onclick="showPage('menu'); filterCakes('wedding', document.getElementById('filter-wedding'))">Wedding
+                            Cakes</a>
+                        <a onclick="showPage('menu'); filterCakes('custom', document.getElementById('filter-custom'))">Custom
+                            Design</a>
+                        <a onclick="showPage('menu')">Cupcakes</a>
+                        <a onclick="showPage('menu')">Anniversary</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Delivery Areas</h4>
+                        <a>Maijdee</a>
+                        <a>Chowmuhani</a>
+                        <a>Begumganj</a>
+                        <a>Sonaimuri</a>
+
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>© 2026 Emu's Cake Bakery · Maijdee, Noakhali, Bangladesh</span>
+                    <span>Made with Love and a lot of sugar</span>
+                </div>
+            </div>
+    </footer>
+
+    <!-- ── Floating WhatsApp ── -->
+    <a class="wa-float"
+        href="https://wa.me/8801576742531?text=Hello!%20I'd%20like%20to%20order%20a%20cake%20from%20Emu's%20Cake%20Bakery!"
+        target="_blank" title="Order on WhatsApp">
+        💬
+        <span class="wa-tooltip">Order on WhatsApp</span>
+    </a>
+
+    <!-- ── Back to Top ── -->
+    <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        title="Back to top">↑</button>
+
+    <!-- ── External JavaScript ── -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

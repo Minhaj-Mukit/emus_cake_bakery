@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Admin Dashboard - Emu's Cake Bakery</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <h2>Emu's Admin</h2>
+            <ul>
+                <li onclick="showSection('cakes')" class="active" id="nav-cakes">🎂 Cakes</li>
+                <li onclick="showSection('reviews')" id="nav-reviews">⭐ Reviews</li>
+                <li onclick="showSection('gallery')" id="nav-gallery">🖼 Gallery</li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- CAKES SECTION -->
+            <section id="sec-cakes" class="admin-section active">
+                <div class="section-head">
+                    <h3>AI Cake Generator</h3>
+                    <p>Upload a cake photo and Gemini AI will write the description automatically!</p>
+                </div>
+                
+                <div class="ai-generator-box">
+                    <form id="cake-form">
+                        <div class="form-row">
+                            <div class="form-group" style="flex:0.5;">
+                                <label>Step 1: Select Cake Photo</label>
+                                <input type="file" id="ai-cake-image" accept="image/*" required>
+                                <div id="ai-status" class="status-msg"></div>
+                                <img id="preview-img" style="display:none; max-width: 100%; margin-top:10px; border-radius: 8px;">
+                            </div>
+
+                            <div class="form-group" style="flex:1;">
+                                <label>Image Local Name (e.g., images/cake1.jpg)</label>
+                                <input type="text" id="cake-img-name" placeholder="images/my_photo.png" required>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Name (English)</label>
+                                        <input type="text" id="cake-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Name (Bangla)</label>
+                                        <input type="text" id="cake-name-bn" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Description (English)</label>
+                                        <textarea id="cake-desc" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description (Bangla)</label>
+                                        <textarea id="cake-desc-bn" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Price (BDT) *</label>
+                                        <input type="number" id="cake-price" placeholder="Only type numbers" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select id="cake-cat" required>
+                                            <option value="birthday">Birthday</option>
+                                            <option value="wedding">Wedding</option>
+                                            <option value="custom">Custom</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Emoji</label>
+                                        <input type="text" id="cake-emoji">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Badge</label>
+                                        <select id="cake-badge">
+                                            <option value="">None</option>
+                                            <option value="popular">Popular (Best Seller)</option>
+                                            <option value="new">New Arrival</option>
+                                            <option value="custom">Custom Design</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-actions" style="margin-top: 15px;">
+                                    <button type="button" id="ai-scan-btn" class="btn-secondary">✨ Scan with AI</button>
+                                    <button type="submit" id="cake-save-btn" class="btn-primary">💾 Save to Database</button>
+                                </div>
+                                <div id="save-status" class="success-msg" style="display:none; margin-top:10px;">Saved to Google Sheets!</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- REVIEWS SECTION -->
+            <section id="sec-reviews" class="admin-section" style="display: none;">
+                <div class="section-head">
+                    <h3>Add Review Screenshot</h3>
+                </div>
+                <div class="ai-generator-box">
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label>Step 1: Select Screenshots (Support Multiple)</label>
+                            <input type="file" id="review-image" accept="image/*" multiple>
+                            <div id="review-count" class="status-msg"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Step 2: Image Paths (Auto-filled)</label>
+                            <textarea id="review-img-name" placeholder="images/photo1.png, images/photo2.png..." required></textarea>
+                        </div>
+                        <button type="submit" id="review-save-btn" class="btn-primary">💾 Save to Database</button>
+                        <div id="save-status-review" class="success-msg" style="display:none; margin-top:10px;">Saved to Google Sheets!</div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- GALLERY SECTION -->
+            <section id="sec-gallery" class="admin-section" style="display: none;">
+                <div class="section-head">
+                    <h3>Add Gallery Photo</h3>
+                </div>
+                <div class="ai-generator-box">
+                    <form id="gallery-form">
+                        <div class="form-group">
+                            <label>Step 1: Select Gallery Photo</label>
+                            <input type="file" id="gallery-image" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label>Step 2: Image Code (Auto-filled)</label>
+                            <input type="text" id="gallery-img-name" required>
+                        </div>
+                        <button type="submit" id="gallery-save-btn" class="btn-primary">💾 Save to Database</button>
+                        <div id="save-status-gallery" class="success-msg" style="display:none; margin-top:10px;">Saved to Google Sheets!</div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- The actual logic that connects to APIs -->
+    <script src="admin.js"></script>
+</body>
+</html>
